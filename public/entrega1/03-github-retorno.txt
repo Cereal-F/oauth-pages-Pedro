@@ -1,0 +1,2 @@
+Homepage URL: https://oauth-pages-pedro.pages.dev
+Authorization callback URL: https://oauth-pages-pedro.pages.dev/oauth/callback/github
