@@ -1,0 +1,1 @@
+https://oauth-pages-pedro.pages.dev/oauth/callback/google
