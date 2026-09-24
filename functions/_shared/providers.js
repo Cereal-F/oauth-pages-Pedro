@@ -70,8 +70,7 @@ export async function getGitHubUser(accessToken) {
     {
       headers: {
         "Authorization": `Bearer ${accessToken}`,
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2026-03-10"
+        "Accept": "application/vnd.github+json"
       }
     }
   );
@@ -101,7 +100,6 @@ export async function revokeGitHub(
       headers: {
         "Authorization": `Basic ${basic}`,
         "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2026-03-10",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
