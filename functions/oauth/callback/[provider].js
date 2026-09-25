@@ -12,8 +12,7 @@ import {
 import {
   exchangeCode,
   getGitHubUser,
-  revokeGitHub,
-  getProviderConfig
+  revokeGitHub
 } from "../../_shared/providers.js";
 
 import {
@@ -44,17 +43,11 @@ export async function onRequestGet(context) {
     });
   }
 
-  const url =
-    new URL(context.request.url);
+  const url = new URL(context.request.url);
 
-  const error =
-    url.searchParams.get("error");
-
-  const code =
-    url.searchParams.get("code");
-
-  const state =
-    url.searchParams.get("state");
+  const error = url.searchParams.get("error");
+  const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
 
   if (error || !code || !state) {
     return errorResponse();
@@ -144,8 +137,7 @@ export async function onRequestGet(context) {
     } else {
       if (
         !tokens.access_token ||
-        String(tokens.token_type).toLowerCase() !==
-          "bearer"
+        String(tokens.token_type).toLowerCase() !== "bearer"
       ) {
         throw new Error("Invalid GitHub token");
       }
