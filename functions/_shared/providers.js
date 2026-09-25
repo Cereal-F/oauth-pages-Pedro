@@ -89,35 +89,3 @@ export async function getGitHubUser(accessToken) {
   return response.json();
 }
 
-export async function revokeGitHub(
-  env,
-  accessToken
-) {
-  const credentials =
-    `${env.GITHUB_CLIENT_ID}:${env.GITHUB_CLIENT_SECRET}`;
-
-  const basic = btoa(credentials);
-
-  const response = await fetch(
-    `https://api.github.com/applications/${encodeURIComponent(
-      env.GITHUB_CLIENT_ID
-    )}/grant`,
-    {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Basic ${basic}`,
-        "Accept": "application/vnd.github+json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        access_token: accessToken
-      })
-    }
-  );
-
-  if (response.status !== 204) {
-    throw new Error(
-      "GitHub authorization revocation failed"
-    );
-  }
-}

@@ -11,8 +11,7 @@ import {
 
 import {
   exchangeCode,
-  getGitHubUser,
-  revokeGitHub
+  getGitHubUser
 } from "../../_shared/providers.js";
 
 import {
@@ -171,10 +170,6 @@ export async function onRequestGet(context) {
               )
       };
 
-      await revokeGitHub(
-        context.env,
-        tokens.access_token
-      );
     }
 
     const session =
