@@ -101,17 +101,17 @@ export async function onRequestGet(context) {
       state
     );
 
+    authorization.searchParams.set(
+      "code_challenge",
+      codeChallenge
+    );
+
+    authorization.searchParams.set(
+      "code_challenge_method",
+      "S256"
+    );
+
     if (provider === "google") {
-      authorization.searchParams.set(
-        "code_challenge",
-        codeChallenge
-      );
-
-      authorization.searchParams.set(
-        "code_challenge_method",
-        "S256"
-      );
-
       authorization.searchParams.set(
         "scope",
         "openid email profile"
