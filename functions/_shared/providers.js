@@ -44,6 +44,7 @@ export async function exchangeCode(
 
   body.set("client_id", config.clientId);
   body.set("client_secret", config.clientSecret);
+  body.set("grant_type", "authorization_code");
   body.set("code", code);
   body.set("redirect_uri", config.redirectUri);
   body.set("code_verifier", codeVerifier);
