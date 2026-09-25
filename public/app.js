@@ -1,25 +1,62 @@
-fetch("/api/me", {
-  credentials: "same-origin"
-})
-  .then((response) =>
-    response.ok
-      ? response.json()
-      : null
-  )
-  .then((user) => {
-    const status =
-      document.getElementById("status");
+const statusElement =
+  document.getElementById("status");
 
-    status.textContent = user
+async function refreshSessionStatus() {
+  try {
+    const response =
+      await fetch("/api/me", {
+        credentials: "same-origin"
+      });
+
+    const user =
+      response.ok
+        ? await response.json()
+        : null;
+
+    statusElement.textContent = user
       ? `Sessão de ${
           user.email ??
           user.displayName
         }.`
       : "Nenhuma sessão neste navegador.";
-  })
-  .catch(() => {
-    document.getElementById(
-      "status"
-    ).textContent =
+  } catch {
+    statusElement.textContent =
       "Nenhuma sessão neste navegador.";
-  });
+  }
+}
+
+const logoutForm =
+  document.querySelector(
+    'form[action="/oauth/logout"]'
+  );
+
+if (logoutForm) {
+  logoutForm.addEventListener(
+    "submit",
+    async (event) => {
+      event.preventDefault();
+
+      try {
+        const response =
+          await fetch("/oauth/logout", {
+            method: "POST",
+            credentials: "same-origin"
+          });
+
+        if (
+          response.ok ||
+          response.status === 204
+        ) {
+          statusElement.textContent =
+            "Nenhuma sessão neste navegador.";
+          await refreshSessionStatus();
+        }
+      } catch {
+        statusElement.textContent =
+          "Nenhuma sessão neste navegador.";
+      }
+    }
+  );
+}
+
+refreshSessionStatus();
