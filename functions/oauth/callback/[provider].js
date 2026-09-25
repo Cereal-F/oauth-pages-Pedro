@@ -236,7 +236,9 @@ export async function onRequestGet(context) {
     );
 
     return response;
-  } catch {
+  } catch (error) {
+    console.error(error);
+
     return new Response(
       "Authentication failed",
       {
