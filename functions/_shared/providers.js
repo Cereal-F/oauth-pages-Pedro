@@ -109,6 +109,8 @@ export async function revokeGitHub(
   );
 
   if (response.status !== 204) {
-    throw new Error("GitHub authorization revocation failed");
+    throw new Error(
+      "GitHub authorization revocation failed"
+    );
   }
 }
