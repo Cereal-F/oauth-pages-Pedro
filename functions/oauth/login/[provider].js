@@ -5,7 +5,9 @@ import {
 } from "../../_shared/crypto.js";
 
 import {
-  transactionCookie
+  transactionCookie,
+  clearSessionCookie,
+  clearTransactionCookie
 } from "../../_shared/cookies.js";
 
 import {
@@ -27,6 +29,14 @@ export async function onRequestGet(context) {
   try {
     const config =
       getProviderConfig(provider, context.env);
+
+    await context.env.DB
+      .prepare(`
+        DELETE FROM oauth_transactions
+        WHERE expires_at <= ?
+      `)
+      .bind(Math.floor(Date.now() / 1000))
+      .run();
 
     const transactionId = randomToken();
     const state = randomToken();
@@ -130,6 +140,16 @@ export async function onRequestGet(context) {
         "Cache-Control": "no-store"
       }
     });
+
+    response.headers.append(
+      "Set-Cookie",
+      clearSessionCookie()
+    );
+
+    response.headers.append(
+      "Set-Cookie",
+      clearTransactionCookie()
+    );
 
     response.headers.append(
       "Set-Cookie",
