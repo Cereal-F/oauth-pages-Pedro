@@ -5,7 +5,9 @@ import {
 
 const GOOGLE_ISSUER = "https://accounts.google.com";
 
-async function getDiscoveryion"
+async function getDiscovery() {
+  const response = await fetch(
+    "https://accounts.google.com/.well-known/openid-configuration"
   );
 
   if (!response.ok) {
