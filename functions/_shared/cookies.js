@@ -8,7 +8,8 @@ export function getCookie(request, name) {
   const cookies = header.split(";");
 
   for (const cookie of cookies) {
-    const [key, ...valueParts] = cookie.trim().split("=");
+    const [key, ...valueParts] =
+      cookie.trim().split("=");
 
     if (key === name) {
       return valueParts.join("=");
