@@ -64,28 +64,38 @@ export async function exchangeCode(
     body
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Token exchange failed");
+    throw new Error(
+      `Token exchange failed: ${JSON.stringify(data)}`
+    );
   }
 
-  return response.json();
+  return data;
 }
 
 export async function getGitHubUser(accessToken) {
   const response = await fetch(
     "https://api.github.com/user",
     {
+      method: "GET",
       headers: {
         "Authorization": `Bearer ${accessToken}`,
-        "Accept": "application/vnd.github+json"
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "oauth-pages-pedro"
       }
     }
   );
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("GitHub user request failed");
+    throw new Error(
+      `GitHub user request failed: ${JSON.stringify(data)}`
+    );
   }
 
-  return response.json();
+  return data;
 }
-
