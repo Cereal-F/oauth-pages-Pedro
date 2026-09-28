@@ -122,16 +122,11 @@ export async function onRequestGet(context) {
         nonce
       );
     } else {
-      authorization.searchParams.set(
-        "scope",
-        "read:user user:email"
-      );
-
-      authorization.searchParams.set(
-        "allow_signup",
-        "true"
-      );
-    }
+  authorization.searchParams.set(
+    "allow_signup",
+    "true"
+  );
+}
 
     const response = new Response(null, {
       status: 302,
