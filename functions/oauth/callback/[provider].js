@@ -11,7 +11,8 @@ import {
 
 import {
   exchangeCode,
-  getGitHubUser
+  getGitHubUser,
+  revokeGitHubAuthorization
 } from "../../_shared/providers.js";
 
 import {
@@ -153,6 +154,12 @@ export async function onRequestGet(context) {
         throw new Error("Invalid GitHub identity");
       }
 
+      await revokeGitHubAuthorization(
+        context.env.GITHUB_CLIENT_ID,
+        context.env.GITHUB_CLIENT_SECRET,
+        tokens.access_token
+      );
+      
       identity = {
         issuer: "https://github.com",
         subject: String(githubUser.id),
