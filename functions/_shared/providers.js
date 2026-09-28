@@ -99,3 +99,41 @@ export async function getGitHubUser(accessToken) {
 
   return data;
 }
+
+export async function revokeGitHubAuthorization(
+  clientId,
+  clientSecret,
+  accessToken
+) {
+  const response = await fetch(
+    `https://api.github.com/applications/${encodeURIComponent(clientId)}/grant`,
+    {
+      method: "DELETE",
+      headers: {
+        "Authorization":
+          `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+        "Accept":
+          "application/vnd.github+json",
+        "X-GitHub-Api-Version":
+          "2026-03-10",
+        "Content-Type":
+          "application/json",
+        "User-Agent":
+          "oauth-pages-pedro"
+      },
+      body: JSON.stringify({
+        access_token: accessToken
+      })
+    }
+  );
+
+  if (response.status !== 204) {
+    const text = await response.text();
+
+    throw new Error(
+      `GitHub authorization revocation failed: ${text}`
+    );
+  }
+
+  return true;
+}
