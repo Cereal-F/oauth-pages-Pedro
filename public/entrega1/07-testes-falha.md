@@ -30,10 +30,10 @@
 
 ## Caso 5 — Origin inválida no logout
 
-- Preparação: Foi utilizada uma sessão válida e enviado um pedido de logout com uma origem diferente de `PUBLIC_BASE_URL`.
-- Pedido enviado: `POST /oauth/logout` com Origin inválida.
-- Resultado esperado: A saída é recusada e a sessão original continua válida.
-- Resultado observado: O logout foi recusado e a sessão original permaneceu válida.
+- Preparação: Foi utilizada uma sessão válida e enviado um pedido de logout com um cabeçalho `Origin` diferente do valor definido em `PUBLIC_BASE_URL`.
+- Pedido enviado: `POST /oauth/logout` com `Origin` inválida.
+- Resultado esperado: A aplicação responde `403 Forbidden`, recusa o logout e mantém a sessão original válida.
+- Resultado observado: A aplicação respondeu `403 Forbidden`, recusou o logout e a sessão original permaneceu válida.
 
 ## Caso 6 — Reutilização do cookie revogado
 
