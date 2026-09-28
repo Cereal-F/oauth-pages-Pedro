@@ -11,16 +11,8 @@ export async function onRequestPost(context) {
   const origin =
     context.request.headers.get("Origin");
 
-  const referer =
-    context.request.headers.get("Referer");
-
-  const requestOrigin =
-    origin ??
-    (referer ? new URL(referer).origin : null);
-
   if (
-    requestOrigin &&
-    requestOrigin !== context.env.PUBLIC_BASE_URL
+    origin !== context.env.PUBLIC_BASE_URL
   ) {
     return new Response(
       "Invalid origin",
@@ -79,4 +71,3 @@ export async function onRequestPost(context) {
     );
   }
 }
-``
