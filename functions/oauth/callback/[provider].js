@@ -159,7 +159,7 @@ export async function onRequestGet(context) {
         context.env.GITHUB_CLIENT_SECRET,
         tokens.access_token
       );
-      
+
       identity = {
         issuer: "https://github.com",
         subject: String(githubUser.id),
@@ -176,7 +176,6 @@ export async function onRequestGet(context) {
                   : null
               )
       };
-
     }
 
     const session =
@@ -238,17 +237,7 @@ export async function onRequestGet(context) {
     );
 
     return response;
-} catch (error) {
-  console.error("GITHUB CALLBACK ERROR:", error);
-
-  return new Response(
-    `Authentication failed: ${error?.message || error}`,
-    {
-      status: 400,
-      headers: {
-        "Cache-Control": "no-store"
-      }
-    }
-  );
-}
+  } catch {
+    return errorResponse();
+  }
 }
